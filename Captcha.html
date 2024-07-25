@@ -1,0 +1,101 @@
+<html>
+    <head>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Tiny5&display=swap" rel="stylesheet">
+        <style>
+            #Captchabox
+            {
+                width: 150px;
+                height: 50px;
+                pointer-events: none;
+                user-select: none;
+                background-image: url('captchabg.png');
+                font-size: 30px;
+                text-align: center;
+                line-height: 50px;
+                font-family: 'Tiny5';
+            }
+        </style>
+        <script>
+            function getRandom(min, max)
+            {
+                var a=Math.random();
+                var b=a*(max-min)+min;
+                b=parseInt(b);
+                return b;
+            }
+            function generateCaptcha()
+            {
+                var a= getRandom(0,9);
+                var b= String.fromCharCode(getRandom(97,122));
+                var c= String.fromCharCode(getRandom(65,90));
+                var d= getRandom(0,9);
+                var e= getRandom(0,9);
+                var f= String.fromCharCode(getRandom(97,122));
+
+                var code= a+b+c+d+e+f;
+                document.getElementById("Captchabox").innerHTML= code;
+            }
+            function validateCaptcha()
+            {
+                var a= document.getElementById("Captchabox").innerHTML;
+                var b= document.getElementById("inputcaptcha").value;
+                if(a==b)   
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+            }
+
+        </script>
+
+    </head>
+
+
+    <body onload="generateCaptcha()">
+
+        <form onsubmit="return validateCaptcha()">
+
+            Enter Your Name
+            <input type="text" />
+
+            <br/><br/>
+
+            Enter Your Mobile
+            <input type="text" />
+
+            <br/><br/>
+
+            Enter Your Email ID
+            <input type="email" />
+
+            <br/><br/>
+
+            Enter Your Password
+            <input type="password" />
+            
+            <br/><br/>
+
+            <div id="Captchabox"></div>
+            <button type="button" onclick="generateCaptcha()">Refresh</button>
+
+            <br/>
+            Enter Above Captcha
+            <input type="text" id="inputcaptcha" />
+
+            <br/><br/>
+
+
+            <button>Submit</button>
+
+
+        </form>
+
+  </body>
+</html>
