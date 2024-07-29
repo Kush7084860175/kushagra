@@ -1,0 +1,146 @@
+<html>
+    <head>
+        <style>
+            #gamebox
+            {
+                width: 300px;
+                height: 300px;
+                margin: 50px auto;
+                background-color: white;
+            }
+            #gamebox tr
+            {
+                width: 300px;
+                height: 100px;
+            }
+            #gamebox tr td
+            {
+                width: 100px;
+                height: 100px;
+            }
+            #gamebox, tr, td
+            {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            #gamebox tr td img
+            {
+                width: 100px;
+                height: 100px;
+            }
+            h1,h2,p
+            {
+                text-align: center;
+                color: blue;
+            }
+            #restartbtn
+            {
+                display: none;
+            }
+        </style>
+
+        <script>
+            var turn=0; //0= o turn,1= x turn
+            var state=[2,2,2,2,2,2,2,2,2]; // 2= blank
+            var winPosition=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+            var gamestatus= true;
+
+            function ontap(e,i)
+            {
+                if(state[i]==2 && gamestatus== true)
+            {
+
+                if(turn==0)
+                {
+                    e.innerHTML="<img src='O.jpg' />"
+                    turn = 1;
+                    state[i]= 0;
+                    document.getElementById("hint").innerHTML="X Player Turn";
+                }
+                else
+                {
+                    e.innerHTML="<img src='X image.jpg' />"
+                    turn = 0;
+                    state[i]= 1;
+                    document.getElementById("hint").innerHTML="O Player Turn";
+                }
+            }
+            var winner= checkwin();
+            if(winner==0)
+            {
+                document.getElementById("hint").innerHTML ="O Player WON";
+                document.getElementById("restartbtn").style.display="inline-block";
+                document.getElementById("gamebody").style.backgroundImage="url(crackers.gif)";
+            }
+            else if(winner==1)
+            {
+                document.getElementById("hint").innerHTML ="X Player WON";
+                document.getElementById("restartbtn").style.display="inline-block";
+                document.getElementById("gamebody").style.backgroundImage="url(crackers.gif)";
+            }
+
+            // Check game over
+            var blank=0;
+            for(x of state)
+            {
+                if(x==2)
+                {
+                    blank++;
+                }
+            }
+            if(blank==0 && winner==2)
+            {
+                document.getElementById("hint").innerHTML="GAME OVER!";
+                document.getElementById("restartbtn").style.display="inline-block";
+            }
+
+
+            } // end on tap
+            function checkwin()
+            {
+                var win=2;
+                for(x of winPosition)
+                {
+                    if(state[x[0]]==state[x[1]] && state[x[1]]==state[x[2]] && state[x[0]]!=2)
+                    {
+                        win= state[x[0]];
+                        gamestatus= false;
+                        break;
+                    }
+                }
+                return win;
+            }
+            function restartgame()
+            {
+                window.location.reload();
+            }
+
+        </script>
+
+    </head>
+    <body id="gamebody">
+        <h1>Tic Tac Toe</h1>
+        <h2 id="hint">O Player Turn</h2>
+        <p>
+            <button id="restartbtn" onclick="restartgame()">Restart Game!</button>
+        </p>
+        <table id="gamebox">
+            <tr>
+                <td onclick="ontap(this,0)"></td>
+                <td onclick="ontap(this,1)"></td>
+                <td onclick="ontap(this,2)"></td>
+            </tr>
+            <tr>
+                <td onclick="ontap(this,3)"></td>
+                <td onclick="ontap(this,4)"></td>
+                <td onclick="ontap(this,5)"></td>
+            </tr>
+            <tr>
+                <td onclick="ontap(this,6)"></td>
+                <td onclick="ontap(this,7)"></td>
+                <td onclick="ontap(this,8)"></td>
+            </tr>
+            
+        </table>
+    </body>
+</html>
